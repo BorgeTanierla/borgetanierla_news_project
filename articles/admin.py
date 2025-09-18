@@ -1,8 +1,16 @@
 from django.contrib import admin
-from .models import Article
+from .models import Article, Comment  # new
 
 
-class ArticleAdmin(admin.ModelAdmin):
+class CommentInline(admin.TabularInline):  # new
+    model = Comment
+    extra = 0  # new
+
+
+class ArticleAdmin(admin.ModelAdmin):  # new
+    inlines = [
+        CommentInline,
+    ]
     list_display = [
         "title",
         "body",
@@ -11,3 +19,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Comment)  # new
